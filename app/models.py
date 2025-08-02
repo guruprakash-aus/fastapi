@@ -40,7 +40,7 @@ class User(Base):
     updated_at = Column(
         TIMESTAMP(timezone=True), server_default="now()", onupdate="now()"
     )
-
+    phone_number = Column(String, nullable=True)  # Optional phone number
 
 # Votes Model
 class Vote(Base):
