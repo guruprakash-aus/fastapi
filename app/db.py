@@ -12,23 +12,23 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-while True:
-    try:
-        conn = psycopg2.connect(
-            host="localhost",
-            port="5472",
-            database="fastapi_postgres_db",
-            user="fastapi_db",
-            password="fastapi_db_password",
-            cursor_factory=RealDictCursor,
-        )
-        cursor = conn.cursor()
-        print("Database connection successful")
-        break
-    except Exception as e:
-        print("Database connection failed")
-        print(f"Error: {e}")
-        time.sleep(2)
+# while True:
+#     try:
+#         conn = psycopg2.connect(
+#             host="localhost",
+#             port="5472",
+#             database="fastapi_postgres_db",
+#             user="fastapi_db",
+#             password="fastapi_db_password",
+#             cursor_factory=RealDictCursor,
+#         )
+#         cursor = conn.cursor()
+#         print("Database connection successful")
+#         break
+#     except Exception as e:
+#         print("Database connection failed")
+#         print(f"Error: {e}")
+#         time.sleep(2)
 
 def get_db():
     db = SessionLocal()
