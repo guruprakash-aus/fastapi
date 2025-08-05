@@ -1,0 +1,14 @@
+[Unit]
+Description=Fastapi Application for Social Media
+After=network.target
+
+[Service]
+User=guru
+Group=guru
+WorkingDirectory=/home/guru/app/src/
+Environment="PATH=/home/guru/app/venv/bin"
+EnvironmentFile=/home/guru/.env
+ExecStart=/home/guru/app/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+
+[Install]
+WantedBy=multi-user.target
