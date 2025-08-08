@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  fastapi_postgres_db:
+  fastapi_db:
     image: "postgres:17.5"
     ports:
-      - "5472:5432"
+      - "5432:5432"
     deploy:
       mode: replicated
       replicas: 1
     environment:
-      POSTGRES_USER: fastapi_db
-      POSTGRES_PASSWORD: fastapi_db_password
-      POSTGRES_DB: fastapi_postgres_db
+      POSTGRES_USER: fastapi_user
+      POSTGRES_PASSWORD: fastapi_password
+      POSTGRES_DB: fastapi_db
     volumes:
-      - ./db-data/fastapi_postgres_db/:/var/lib/postgresql/data
+      - ./db-data/fastapi_db/:/var/lib/postgresql/data
