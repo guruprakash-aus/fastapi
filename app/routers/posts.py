@@ -94,6 +94,14 @@ def create_posts(
 ):
     # print(current_user.id)
     # new_post = models.Post(title=post.title, content=post.content, published=post.published)
+    
+    # Validate the post data and send 422 error if invalid
+    if not post.title or not post.content:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Title and content are required",
+        )
+    
     new_post = models.Post(
         owner_id=current_user.id,  # Associate the post with the current user
         **post.dict(),
@@ -106,6 +114,7 @@ def create_posts(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Failed to create post",
         )
+
     return new_post
 
 

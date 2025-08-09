@@ -51,3 +51,28 @@ def vote(
         db_session.delete(existing_vote)
         db_session.commit()
         return {"message": "Vote removed successfully"}
+    
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
+def delete_vote(
+    vote: schemas.Vote,
+    db_session: Session = Depends(get_db),
+    current_user: models.User = Depends(oauth2.get_current_user),
+):
+    print(f"Current user: {current_user.id}, Vote to delete: {vote}")
+    
+    # Check if the user has voted on this post
+    existing_vote = db_session.query(models.Vote).filter(
+        models.Vote.post_id == vote.post_id,
+        models.Vote.user_id == current_user.id
+    ).first()
+    
+    if not existing_vote:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Vote does not exist",
+        )
+    
+    db_session.delete(existing_vote)
+    db_session.commit()
+    print("Vote deleted successfully")
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

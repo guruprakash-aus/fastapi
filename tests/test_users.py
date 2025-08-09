@@ -1,28 +1,7 @@
 from app import schemas
-from .db import client, session
 import pytest
 from jose import jwt
 from app.config import settings
-
-@pytest.fixture
-def test_user(client):
-    """Fixture to create a test user."""
-    print("Creating a test user")
-    user_data = {
-        "email": "guru@gmail.com",
-        "password": "password123"
-    }
-    response = client.post(
-        "/users/", json=user_data
-    )
-    print("Response status code:", response.status_code)
-    print("Response JSON:", response.json())
-    assert response.status_code == 201
-    new_user = response.json()
-    assert new_user['email'] == user_data["email"]
-    new_user['password'] = user_data["password"]  # Add password for login
-    return new_user
-
 
 
 def test_read_root(client):
@@ -66,3 +45,19 @@ def test_login_user(client, test_user):
     assert id == test_user['id']
     # assert "access_token" in response.json()
     assert response.json().get("token_type") == "bearer"
+
+@pytest.mark.parametrize("email, password, status_code", [
+    ('wrongemail@gmail.com', 'password123', 404),
+    ('guru@gmail.com', 'wrongpassword', 403),
+    ('wrongemail@gmail.com', 'wrongpassword', 404),
+    (None, 'password123', 404),
+    ('guru@gmail.com', None, 403),
+    (None, None, 404)
+])
+def test_incorrect_login(test_user, client, email, password, status_code):
+    print("Testing incorrect login with email:", email, "and password:", password)
+    res = client.post(
+        "/auth/login/", data={"username": email, "password": password}
+    )
+    assert res.status_code == status_code
+

@@ -27,7 +27,7 @@ class PostBase(BaseModel):
     title: str
     content: str
     published: bool = True
-    rating: Optional[int] = None
+    rating: Optional[conint(ge=0)] = None  # Rating must be a non-negative integer
 
 class PostCreate(PostBase):
     pass
