@@ -7,7 +7,7 @@ def test_get_all_posts(authorized_client, test_posts):
     response = authorized_client.get("/posts/")
     print("Response status code:", response.status_code)
     print("Response JSON:", response.json())
-    assert response.status_code == 201 # Changed from 200 to 201
+    assert response.status_code == 200
     # assert isinstance(response.json(), list)
     assert len(response.json()) == len(test_posts)
 
