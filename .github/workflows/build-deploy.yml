@@ -129,7 +129,7 @@ jobs:
           script: |
             cd app/src
             git pull
-            sudo systemctl restart fastapi-sm.service
+            echo ${{ secrets.SERVER_PASSWORD }} | sudo -S systemctl restart fastapi-sm.service
 
 
 
