@@ -88,9 +88,31 @@ jobs:
     # Deploy to the server
     needs: build
     runs-on: ubuntu-latest
+    environment: 
+      name: production
     steps:
-      - name: Deploy changes to server
-        run: echo "Going to deploy changes to the server"
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy changes to Heroku
+        run: echo "Going to deploy changes to Heroku"
+
+      # Pull the latest Docker image
+      # Instal Heroku CLI
+      # Heroku Login
+      # Add git remote for Heroku
+      # git push heroku main
+
+      # To do the above steps, we can use heroku marketplace action
+      - name: Install Heroku CLI # <- IMPORTANT!!! Make sure the cli is installed before using the action
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh 
+      - uses: akhileshns/heroku-deploy@v3.14.15 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+
 
 
 
