@@ -12,6 +12,16 @@ on: [push, pull_request]
 
 jobs:
   job1:
+    env:
+      DATABASE_HOSTNAME: localhost
+      DATABASE_PORT: 5472
+      DATABASE_USERNAME: fastapi_sm_user
+      DATABASE_PASSWORD: password123
+      DATABASE_NAME: fastapi_sm_db
+      SECRET_KEY: yaarasecret
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+
     runs-on: ubuntu-latest
 
     steps:
