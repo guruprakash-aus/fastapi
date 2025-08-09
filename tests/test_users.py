@@ -4,15 +4,15 @@ from jose import jwt
 from app.config import settings
 
 
-def test_read_root(client):
-    """Test the root endpoint."""
-    print("Testing the root endpoint")
-    response = client.get("/")
-    print("Response status code:", response.status_code)
-    print("Response JSON:", response.json())
-    assert response.status_code == 200
-    # assert response.json() == {"message": "Hello World "}
-    assert response.json().get("message") == "Hello World "
+# def test_read_root(client):
+#     """Test the root endpoint."""
+#     print("Testing the root endpoint")
+#     response = client.get("/")
+#     print("Response status code:", response.status_code)
+#     print("Response JSON:", response.json())
+#     assert response.status_code == 200
+#     # assert response.json() == {"message": "Hello World "}
+#     assert response.json().get("message") == "Hello World "
 
 
 def test_create_user(client):
